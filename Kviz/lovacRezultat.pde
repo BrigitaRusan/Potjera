@@ -1,6 +1,6 @@
-class Druga{
+class Lovac{
   
-  Druga(){
+  Lovac(){
   }
   
   void iscrtaj(){
@@ -20,6 +20,6 @@ class Druga{
     
     fill(255);
     textSize(20);
-    text("Pritisnite SPACE ako ste spremni za igru na ploči.", 400, 480 );
+    text("Pritisnite SPACE ako ste spremni za završnu igru.", 400, 480 );
   }
 }

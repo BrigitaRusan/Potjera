@@ -212,10 +212,17 @@ class Treca{
       q = false;
       lpos = -1;
       treca = false;
-      if( win == true) // u završnu potjeru se može ići samo ako se pobjedilo na ploči
-        zav_pot= true;
-      else
+      if( win == true){ // u završnu potjeru se može ići samo ako se pobjedilo na ploči
+        //zav_pot= true;
+      treca = false; //kad istekne vrijeme, gotovi smo sa završnom potjerom
+      hunter= true; //idemo na ispis bodova
+      ukupno_tocnih=0;
+      return;
+      }
+      else{
+        //ako je izgubljena igra s lovcem vraća na početni ekran
         zavrsni = true;
+      }
     }
     if( keyCode == ENTER && p){
       check = false;

@@ -50,7 +50,7 @@ class Prva{
     "Oblik kojeg slova tvori sustav autocesta u Istri?", 
     "Pisac romana Madame Bovary?", 
     "Koje krvne čestice sudjeluju u zgrušavanju krvi?", 
-    "Koji je srpoliki predmt bio lovačko oružje aboridžina?",
+    "Koji je srpoliki predmet bio lovačko oružje aboridžina?",
     "Koja je najmanja država na svijetu?",
     "Koja je nogometna ekipa osvojila Ligu Prvaka\nnajviše puta?",
     "Koje se voće može pronaći na trofeju dobivenom za\nosvajanje Wimbledona?",
@@ -67,16 +67,19 @@ class Prva{
   String[] odgovori = {"Voldemort","1912", "Aluminij", "Elbe", "Serotonin", "Šala", "Sumporasta",  "Jetra", "Prijamu", "2009", "Ruski", " Norveškoj", "180", "Tetida", "Kina", "Reimsu", "Davor Vugrinec", "Vancouver", "9", "William Culen", "Junak našeg doba", "Jim Carrey", "Abuja", "Thomas Pynchon",
                       "Četiri", "Aragorn", "Bariton", "Janjevo", "Noć vještica", "Ljudske", "Plinovitom", "Gonič", "Brzina svjetlosti", "Plava", "Bruce Willis", "U registraturi", "Labirint", "Rijeke", "Voda", "Usi", "Dioniza", "Guldenom", "Strasbourg", "Tablet", "Simpsoni", "Kalifornija", "Kljove", "Y", "Gustav Flaubert", "Trombociti", "Bumerang",
                       "Vatikan", "Real Madrid", "Ananas", "Corona", "Kraljev Grudobran", "Bob Dylan", "David Jones", "Cristiano Ronaldo", "Scijentologija", "Lady Gaga", "North West", "Činim pravu stvar", "Cico Kranjčar"};
-  int i, m=0, vrime = 60000, time = millis(), numPitanja=pitanja.length;
+  int i, m=0,time = millis(), numPitanja=pitanja.length;
+  //int  vrime = 60000;
+  int vrime = 5000;
   boolean q;
   String odgovor = "", feedback = "";
   int[] iskoristeniIndeksi = new int[numPitanja];
   int koristenaPitanja = 0;
   boolean blink = true; 
   String kursor = "|";
-  Prva(){
+  String IspisOdgovora = odgovor + kursor; 
 
-  }
+  
+  Prva(){  }
 
   void iscrtaj(){
     if( prva ){
@@ -90,7 +93,7 @@ class Prva{
       time = millis();
     }
     if( vrime <= 0 ){
-      prva = false;
+      prva = false; // IDE NA DRUGU FAZU
       druga = true;
       return;
     }
@@ -122,6 +125,7 @@ class Prva{
       rect(50, 200, 700, 150);
       rect(50, 480, 700, 50);
       
+      //----------- odabire random pitanje ---------
       fill(0);
       if(!q){
         i = (int)random(numPitanja);
@@ -133,6 +137,7 @@ class Prva{
         koristenaPitanja += 1;
         q = true;
       }
+      // -------- ispis pitanja --------------------
       text(pitanja[i], 100, 270);
       
       // ------- titravi kursor uz odgovor----------
@@ -140,28 +145,26 @@ class Prva{
         blink = !blink;
       }
       if(blink){
-        text(odgovor, 100, 513);
+        text(IspisOdgovora.replace("|", ""), 100, 513);
       }
       else{
-        text(odgovor+kursor, 100, 513);
+        text(IspisOdgovora, 100 , 513);
       }
-      
      //--------------------------------------
      
       if(feedback != ""){
         fill(255);
-        //-----------
+        //----------- poboja zeleno/ crveno ovisno o odgovoru ----
         if( feedback != "Točno!" ) fill(netocno);
         else fill(tocno);
         rect(50, 480, 700, 50);
         fill( tamnoplava );
-        //-------------
+        //---------------------------------
         text(feedback, 100, 513 );
         m = millis();
         feedback = "";
         q = false;
       }
-
     }
   }
   
@@ -174,26 +177,47 @@ class Prva{
     return false;
   }
 
-  void provjeriBotun( int key ){
+  //--- unutar textboxa za odgovor provjera za ENTER, BACKSPACE, ZNAK SA TIPKOVNICE, LEFT, RIGHT ----
+   void provjeriBotun( int key ){
+    String[] razdvojeniStringovi = split(IspisOdgovora, '|');
+    int cursorPosition = razdvojeniStringovi[0].length();
+     
     if( key == ENTER ){
       provjeriOdgovor();
-      odgovor = "";
+      IspisOdgovora = "";
     }
     else if( key == BACKSPACE){
-      if( odgovor.length() > 0 )
-        odgovor = odgovor.substring( 0, odgovor.length()-1 );
+      if( IspisOdgovora.length() - 1 > 0 ){
+        razdvojeniStringovi[0] = razdvojeniStringovi[0].substring(0, cursorPosition-1)+ "|";
+        IspisOdgovora= join(razdvojeniStringovi, "");
       }
-    else if( (key >= 'a' && key <= 'z') || (key>='A' && key<='Z') ||key==' ' || key=='Š' || key=='Ž' || key=='Č' || key=='Ć' || key=='Đ' || key=='č' || key=='ć' || key=='š' || key=='đ' || key=='ž'|| Character.isDigit(key)){
-      odgovor += char(key);
     }
-  }
+    else if( (key >= 'a' && key <= 'z') || (key>='A' && key<='Z') ||key==' ' || key=='Š' || key=='Ž' || key=='Č' || key=='Ć' || key=='Đ' || key=='č' || key=='ć' || key=='š' || key=='đ' || key=='ž'|| Character.isDigit(key)){
+        razdvojeniStringovi[0] = razdvojeniStringovi[0].substring(0, cursorPosition) +char(key) + "|";
+        IspisOdgovora= join(razdvojeniStringovi, "");
+    }
+    else if (keyCode == LEFT) {
+      if (cursorPosition > 0){
+        cursorPosition = razdvojeniStringovi[0].length() -1;
+        razdvojeniStringovi[0] = razdvojeniStringovi[0] .substring(0, cursorPosition) + "|" + razdvojeniStringovi[0].charAt( razdvojeniStringovi[0].length() - 1);
+        IspisOdgovora= join(razdvojeniStringovi, "");       
+       }
+     }
+    else if (keyCode == RIGHT) {
+    if (cursorPosition < IspisOdgovora.length()) {
+      cursorPosition = razdvojeniStringovi[0].length() -1;
+      razdvojeniStringovi[1] = razdvojeniStringovi[1].charAt(0)  + "|" + razdvojeniStringovi[1].substring(1);
+      IspisOdgovora= join(razdvojeniStringovi, "");
+      }
+    }
+ } 
   
   void provjeriOdgovor(){
+    odgovor = IspisOdgovora.replace("|", ""); // mičemo kursor iz odgovora prije provjere
     if((odgovori[i].toLowerCase()).equals(odgovor.toLowerCase()) == true ){
       song1.play();
       feedback = "Točno!";
       iznos += 3500;
- 
     }
     else{
       feedback = odgovori[i];

@@ -1,11 +1,12 @@
 import processing.sound.*;
 
-boolean pocetna, prva, druga, izbor, treca, zavrsni, win, pravila, lovacIgrac, zav_pot;
+boolean pocetna, prva, druga, izbor, treca, zavrsni, win, pravila, lovacIgrac, zav_pot,hunter;
 Pocetni pocetni;
 Prva Faza1;
 Druga Faza2;
 Treca Faza3;
 Biranje Izbor;
+Lovac Hunter;
 Zavrsna Zavrsni;
 Pravila ispisPravila;
 Zavrsna_potjera zavrsna_potjera;
@@ -59,7 +60,8 @@ void setup(){
   Faza1 = new Prva();                       // file prvaFaza: prva faza igre, upisi odgovor    (zavrsava kada istekne vrijeme)
   Faza2 = new Druga();                      // file drugaFaza: ispisuje rezultat prve faze igre (space za nastavak)
   Izbor = new Biranje();                    // file Biranje: ispisuje iznose ponude, vise/manje (enter odabire igru)
-  Faza3 = new Treca();                      // file trecaFaza: ispisuje plocu, voditelja i igru (zavrsava )
+  Faza3 = new Treca();                      // file trecaFaza: ispisuje plocu, voditelja i igru (zavrsava pobjeda/gubitak)
+  Hunter = new Lovac();
   zavrsna_potjera = new Zavrsna_potjera();  // file zavrsna potjera: ispisuje zavrsnu igru ()
   Zavrsni = new Zavrsna();                  // file Zavrsna: ispisuje rezultat igre s lovcem   (resetira igru)
 
@@ -74,6 +76,7 @@ void setup(){
   pravila = false;
   zav_pot =false;
   lovacIgrac = false;
+  hunter = false;
   
   song1 = new SoundFile(this, "Correct-answer.mp3");
   song2 = new SoundFile(this, "Wrong-answer.mp3");

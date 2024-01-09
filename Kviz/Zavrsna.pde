@@ -8,7 +8,7 @@ class Zavrsna{
     background(konfeti);
     textSize(28);
     fill(255);
-    if( win && ukupno_tocnih >=8 ){  
+    if( ukupno_tocnih >=8 ){  
       fill(255,126);
       rect(200, 310, 400, 100);
       fill(tamnoplava);
@@ -21,7 +21,7 @@ class Zavrsna{
       rect(200, 310, 800, 200);
       fill(tamnoplava);
       textSize(28);
-      text( "Moraš još malo vježbati za brzopotezne,ali\n    vidimo se uskoro.", 400, 350);
+      text( "Moraš još malo vježbati za brzopotezne,ali\nvidimo se uskoro.", 400, 350);
     }
     else{
       background(izgubio);
@@ -29,7 +29,7 @@ class Zavrsna{
       rect(200, 310, 400, 100);
       fill(tamnoplava);
       textSize(28);
-      text( "Dobra igra na ploči,ali\n    ipak ste ulovljeni.", 400, 350);
+      text( "Dobra igra, ali ipak ste ulovljeni.\n", 400, 350);
     }
     
     fill(255);

@@ -81,7 +81,7 @@ class Pocetni{
     if( prva ){
       Faza1.iscrtaj();
       song3.stop();
-      first=true;
+      first=true; // zaustavlja uvodnu pjesmu
     }
     // ispis rezultata prve igre
     if( druga ){
@@ -98,6 +98,11 @@ class Pocetni{
     // igra s lovcem
     if( treca ){
       Faza3.iscrtaj(); 
+      song3.stop();
+      first=true;
+    }
+      if( hunter ){
+      Hunter.iscrtaj(); 
       song3.stop();
       first=true;
     }
@@ -127,6 +132,7 @@ class Pocetni{
       return false;
     }
   }
+  // provjera gdje prebacuje??
   
   void provjeriBotun(int key){
     if( prva ) Faza1.provjeriBotun( key );
@@ -144,6 +150,10 @@ class Pocetni{
     }
     if ( key == ' ' && treca){
       zavrsna_potjera.time = millis();
+      treca = false;
+      hunter = true;
+    }
+    if( key == ' ' && hunter){
       treca = false;
       zav_pot = true;
     }
