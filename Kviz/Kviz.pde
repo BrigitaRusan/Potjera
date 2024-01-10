@@ -9,7 +9,7 @@ Biranje Izbor;
 Lovac Hunter;
 Zavrsna Zavrsni;
 Pravila ispisPravila;
-Zavrsna_potjera zavrsna_potjera;
+Zavrsna_potjera Zavrsna_potjera;
 int iznos, pos, ukupno_tocnih; //za broj točnih odgovora u završnoj potjeri
 
 PImage naslovnica;
@@ -62,21 +62,23 @@ void setup(){
   Izbor = new Biranje();                    // file Biranje: ispisuje iznose ponude, vise/manje (enter odabire igru)
   Faza3 = new Treca();                      // file trecaFaza: ispisuje plocu, voditelja i igru (zavrsava pobjeda/gubitak)
   Hunter = new Lovac();
-  zavrsna_potjera = new Zavrsna_potjera();  // file zavrsna potjera: ispisuje zavrsnu igru ()
+  Zavrsna_potjera = new Zavrsna_potjera();  // file zavrsna potjera: ispisuje zavrsnu igru ()
   Zavrsni = new Zavrsna();                  // file Zavrsna: ispisuje rezultat igre s lovcem   (resetira igru)
 
-  
+  // varijable pomocu kojih upravljamo navigacijom u fileu pocetniEkran
   pocetna = true;
+  pravila = false;
   prva = false;
   druga = false;
   izbor = false;
   treca = false;
-  zavrsni = false;
-  win = false;
-  pravila = false;
-  zav_pot =false;
-  lovacIgrac = false;
   hunter = false;
+  zav_pot =false;
+  zavrsni = false;
+  
+  win = false;
+  lovacIgrac = false;
+
   
   song1 = new SoundFile(this, "Correct-answer.mp3");
   song2 = new SoundFile(this, "Wrong-answer.mp3");

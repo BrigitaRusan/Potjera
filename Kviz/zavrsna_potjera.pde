@@ -75,7 +75,7 @@ class Zavrsna_potjera{
   int i, m=0, time = millis(), numPitanja=pitanja.length;
   boolean q;
   int vrime = 120000;
-  //int vrime = 5000;
+  //int vrime = 5000; // kraće vrijeme za testiranje
   String odgovor = "", feedback = "";
   int[] iskoristeniIndeksi = new int[numPitanja];
   int koristenaPitanja = 0;
@@ -87,6 +87,8 @@ class Zavrsna_potjera{
   Zavrsna_potjera(){} 
 
   void iscrtaj(){
+    
+    //------ ako je vrijeme isteklo ide na file Zavrsna --------------
     if (millis() > time + 1000)
     {
       vrime = vrime - 1000;
@@ -97,9 +99,8 @@ class Zavrsna_potjera{
       zavrsni= true; //idemo na završnu stranicu
       return;
     }
-    
+    //------- iscrtava iznos i koliko jos ima vremena ---------------------
     fill(255);
-    
     //text( str(vrime/1000), 50, 50 );
     if( millis() > m + 1500 ){
       
@@ -108,7 +109,7 @@ class Zavrsna_potjera{
       rect(600, 100, 120, 30);
       
       textSize(25);
-      text("Igrate završnu potjeru za: " + iznos + " kuna!", 50, 80 );
+      text("Igrate završnu potjeru za: " + iznos + " €!", 50, 80 );
       text( str(vrime/1000), 695, 78 );
       image(vrijeme, 650, 47);
       
@@ -120,7 +121,7 @@ class Zavrsna_potjera{
         fill(plava);
       rect(600, 100, (vrime/1000) * 2, 30);
       
-      
+      //----------- polja za pitanje i odgovor -----------
       textSize(20);
       fill(255, 126);
       rect(50, 200, 700, 150);
@@ -138,6 +139,7 @@ class Zavrsna_potjera{
         koristenaPitanja += 1;
         q = true;
       }
+       textAlign(LEFT);
       // -------- ispis pitanja --------------------
       text(pitanja[i], 100, 270);
       
@@ -160,7 +162,7 @@ class Zavrsna_potjera{
         else fill(tocno);
         rect(50, 480, 700, 50);
         fill( tamnoplava );
-        //-------------
+        //-----------------------------------
         text(feedback, 100, 513 );
         m = millis();
         feedback = "";
@@ -185,7 +187,7 @@ class Zavrsna_potjera{
     
     if( key == ENTER ){
       provjeriOdgovor();
-      IspisOdgovora = "";
+      IspisOdgovora = "|";
     }
     else if( key == BACKSPACE){
       if( IspisOdgovora.length() - 1 > 0 ){
@@ -214,6 +216,27 @@ class Zavrsna_potjera{
  }
   
   void provjeriOdgovor(){
+    
+    //---> odkomentiraj kad imaš više mogućih verzija odgovora za jedno pitanja:
+    // odgovor[i] (string odvojen zarezom) -> listaOdgovora (lista)
+    /*
+      boolean tocan = false;
+      String[] listaOdgovora = odgovor[i].split(",\\s*"); // lista naših odgovora
+      odgovor = IspisOdgovora.replace("|", "");           // odgovor igrača
+      for (String odg : listaOdgovora) {
+            if((odg.toLowerCase()).equals(odgovor.toLowerCase()) == true){
+              song1.play();
+              feedback = "Točno!";
+              iznos += 500;
+              tocan = true;
+            }
+      }
+      if(!tocan){
+         feedback = odgovori[i];
+         song2.play();
+      }
+    */
+    // --------------------------------------------------
     odgovor = IspisOdgovora.replace("|", ""); // mičemo kursor iz odgovora prije provjere
     if((odgovori[i].toLowerCase()).equals(odgovor.toLowerCase()) == true ){
       song1.play();

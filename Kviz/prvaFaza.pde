@@ -68,8 +68,8 @@ class Prva{
                       "Četiri", "Aragorn", "Bariton", "Janjevo", "Noć vještica", "Ljudske", "Plinovitom", "Gonič", "Brzina svjetlosti", "Plava", "Bruce Willis", "U registraturi", "Labirint", "Rijeke", "Voda", "Usi", "Dioniza", "Guldenom", "Strasbourg", "Tablet", "Simpsoni", "Kalifornija", "Kljove", "Y", "Gustav Flaubert", "Trombociti", "Bumerang",
                       "Vatikan", "Real Madrid", "Ananas", "Corona", "Kraljev Grudobran", "Bob Dylan", "David Jones", "Cristiano Ronaldo", "Scijentologija", "Lady Gaga", "North West", "Činim pravu stvar", "Cico Kranjčar"};
   int i, m=0,time = millis(), numPitanja=pitanja.length;
-  //int  vrime = 60000;
-  int vrime = 5000;
+  int  vrime = 60000;
+  //int vrime = 5000; // kraće vrijeme za testiranje
   boolean q;
   String odgovor = "", feedback = "";
   int[] iskoristeniIndeksi = new int[numPitanja];
@@ -87,6 +87,8 @@ class Prva{
         //song4.play();             // zakomentirano jer zvuk krči
       }
     }
+    
+    //------ ako je vrijeme isteko ide na file drugaFaza ------------------
     if (millis() > time + 1000)
     {
       vrime = vrime - 1000;
@@ -97,7 +99,7 @@ class Prva{
       druga = true;
       return;
     }
-    
+    //-------- iscrtava iznos i koliko još ima vremena ---------------
     fill(255);
     //text( str(vrime/1000), 50, 50 );
     if( millis() > m + 1500 ){
@@ -119,13 +121,13 @@ class Prva{
         fill(plava);
       rect(600, 100, (vrime/1000) * 2, 30);
       
-      
+      //----------- polja za pitanje i odgovor -----------
       textSize(20);
       fill(255, 126);
       rect(50, 200, 700, 150);
       rect(50, 480, 700, 50);
       
-      //----------- odabire random pitanje ---------
+      //----------- odabire random pitanje ---------------
       fill(0);
       if(!q){
         i = (int)random(numPitanja);
@@ -184,7 +186,7 @@ class Prva{
      
     if( key == ENTER ){
       provjeriOdgovor();
-      IspisOdgovora = "";
+      IspisOdgovora = "|";
     }
     else if( key == BACKSPACE){
       if( IspisOdgovora.length() - 1 > 0 ){
@@ -213,11 +215,32 @@ class Prva{
  } 
   
   void provjeriOdgovor(){
+    
+    //---> odkomentiraj kad imaš više mogućih verzija odgovora za jedno pitanja:
+    // odgovor[i] (string odvojen zarezom) -> listaOdgovora (lista)
+    /*
+      boolean tocan = false;
+      String[] listaOdgovora = odgovor[i].split(",\\s*"); // lista naših odgovora
+      odgovor = IspisOdgovora.replace("|", "");           // odgovor igrača
+      for (String odg : listaOdgovora) {
+            if((odg.toLowerCase()).equals(odgovor.toLowerCase()) == true){
+              song1.play();
+              feedback = "Točno!";
+              iznos += 500;
+              tocan = true;
+            }
+      }
+      if(!tocan){
+         feedback = odgovori[i];
+         song2.play();
+      }
+    */
+    // --------------------------------------------------
     odgovor = IspisOdgovora.replace("|", ""); // mičemo kursor iz odgovora prije provjere
     if((odgovori[i].toLowerCase()).equals(odgovor.toLowerCase()) == true ){
       song1.play();
       feedback = "Točno!";
-      iznos += 3500;
+      iznos += 500;
     }
     else{
       feedback = odgovori[i];

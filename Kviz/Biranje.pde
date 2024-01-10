@@ -8,11 +8,11 @@ class Biranje{
   void iscrtaj(){
     background(pozadina);
     if( iznos == 0){
-      gornja = 11000;
-      donja = -3500;
+      gornja = 500;
+      donja = 100;
     }
     else{
-      gornja = iznos * 4;
+      gornja = iznos * 2;
       donja = iznos / 2;
     }
     
@@ -57,7 +57,7 @@ class Biranje{
       
     rect( 50+30*3, 275, 700-60*3, 75 );
     
-    //-------------------------------------------------
+    //---------ispis koliko iznosi pojedina razina ---------------
     
     fill( 0 );
     textSize( 45 );
@@ -66,10 +66,16 @@ class Biranje{
     text( iznos, 400, 250 );
     text( donja, 400, 325 );
     
+    textSize(30);
+    text("€", 400 + textWidth(str(gornja)) + 5, 175);
+    text("€", 400 + textWidth(str(iznos)) + 5, 250);
+    text("€", 400 + textWidth(str(donja)) + 5, 325);
+    
     fill(255);
     textSize(20);
     text("Pritisnite ENTER za dalje.", 400, 670 );
    
+  //--------------------------------------------------------------
   
     if(mousePressed){
       if (overRect(50+30, 125, 700-60, 75)==true){
@@ -84,7 +90,8 @@ class Biranje{
     }
   }
   
-  // hover preko up and down gumba
+  // hover preko up and down gumba s tipkovnice
+  
   void provjeriBotun( int key ){
      if( keyCode == UP ){
        if( pos == 1 || pos == 2 ) pos--;
@@ -99,7 +106,7 @@ class Biranje{
        if( pos == 2 ) iznos = donja;
        pos = pos + 1;
        izbor = false;
-       treca = true;
+       treca = true; // preabacuje na igru s lovcem nakon odabira
      }
   }
   

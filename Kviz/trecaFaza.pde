@@ -83,10 +83,15 @@ class Treca{
     background(voditelj);
     nacrtajPlocu();
     fill(255, 126);
+    
+    // pravokutnik za pitanje
     rect( 50, 400, 700, 180 );
+    // pravokutnik za a, b, c odgovore
     rect( 50, 610, 217, 40 );
     rect( 292, 610, 217, 40 );
     rect( 533, 610, 217, 40 );
+    
+    //----------- odabire random pitanje ---------------
     if(!q){
       i = (int)random(numPitanja);
       while(koristenaPitanja != 0 && vecIskoristenoPitanje(iskoristeniIndeksi, i))
@@ -101,12 +106,19 @@ class Treca{
       }
 
     }
+    // -------- ispis pitanja ---------------------------
     fill(0);
     textSize(24);
     text( pitanja[i], 70, 460 );
+    
+    //----
     if( igr != -1 && lov == -1 ){
+      // odigra igrač
       fill(igrac);
       rect( 50, 360, 150, 40 );
+      if( igr == a ) rect( 50, 610, 217, 40 );
+      if( igr == b ) rect( 292, 610, 217, 40 );
+      if( igr == c ) rect( 533, 610, 217, 40 );
       fill(255);
       text( "Igrač", 90, 390);
       if(lovacIgrac==false && millis()>time+1000){
@@ -123,6 +135,7 @@ class Treca{
     else if( igr != -1 && lov != -1 ){
       fill(igrac);
       rect( 50, 360, 150, 40 );
+      
       fill(lovac);
       rect( 600, 360, 150, 40 );
       fill(255);
@@ -140,7 +153,10 @@ class Treca{
         fill(255);
         textSize(20);
         textAlign(CENTER);
-        text("Pritisnite ENTER za sljedeće pitanje.", 400, 700 );
+        if ( pos == 7 || lpos == pos )
+          text("Pritisnite ENTER za dalje.", 400, 700 );
+        else
+          text("Pritisnite ENTER za sljedeće pitanje.", 400, 700 );
         textAlign(LEFT);
         if(check==false){
           if( igr == 0 ) pos++;
@@ -150,7 +166,7 @@ class Treca{
           nacrtajPlocu();
       }
       }
-    
+    // odigra lovac ako je igra igrač vs računalo
       fill(lovac);
       if( lov == a ) rect( 50, 610, 35, 40 );
       if( lov == b ) rect( 292, 610, 35, 40 );
@@ -211,19 +227,13 @@ class Treca{
       c = -1;
       q = false;
       lpos = -1;
-      treca = false;
-      if( win == true){ // u završnu potjeru se može ići samo ako se pobjedilo na ploči
-        //zav_pot= true;
-      treca = false; //kad istekne vrijeme, gotovi smo sa završnom potjerom
-      hunter= true; //idemo na ispis bodova
-      ukupno_tocnih=0;
-      return;
-      }
-      else{
-        //ako je izgubljena igra s lovcem vraća na početni ekran
-        zavrsni = true;
-      }
+      
+      treca = false; //gotovi sa igrom s lovcem
+      hunter = true; // ispisuje rezultat
+
     }
+    
+    //----- resetrira sve nakon odgovora na pitanja ----------------
     if( keyCode == ENTER && p){
       check = false;
       igr = -1;
@@ -234,14 +244,6 @@ class Treca{
       c = -1;
       q = false;
     }
-   /* if( keyCode == ENTER && lov != -1 && igr != -1 && check ){
-      p = true;
-      if( igr == 0 ) pos++;
-      if( lov == 0 ) lpos++;
-    }
-    if( keyCode == ENTER && lov != -1 && igr != -1 ){
-      check = true;
-    }*/
   }
   
   boolean vecIskoristenoPitanje(int[] arr, int val) {
@@ -254,44 +256,57 @@ class Treca{
   }
   
   void nacrtajPlocu(){
+    
+  //-------- ako je lovac uhvatio igrača --------------
     if( lpos == pos ){
-      //background(netocno);
       fill( netocno );
       for( int i = 0; i < 7; i++ )
         rect( 180+10*i, i * 50, 420-20*i,  50 );
       return;
     }
+  //-------- ako je igrač pobijedio-------------------------
     if( pos == 7 ){
-      //background(tocno);
       fill( tocno );
       for( int i = 0; i < 7; i++ )
         rect( 180+10*i, i * 50, 420-20*i,  50 );
       return;
     }
+    
+  //-------- crta polja za vrijeme igre inače ------------------------
     for( int i = 0; i < 7; i++ ){
       fill( 167, 126 );
       rect( 180+10*i, i * 50, 420-20*i,  50 );
     }
     for( int i = 0; i <= lpos; i++ ){
-      fill( 204, 0, 0 );
+      fill( 204, 0, 0 ); // oboja crveno kolko je lovac osvojio
       rect( 180+10*i, i * 50, 420-20*i,  50 );
     }
     for( int i = lpos + 1; i <= pos; i++ ){
-      fill( 0, 51, 153 );
+      fill( 0, 51, 153 ); // oboja plavo kolko je igrač osvojio
       rect( 180+10*i, i * 50, 420-20*i,  50 );
     }
+    
+    //--------- pomak iznosa s obzirom na točnost odgovora ----------------
+    //------- pomiče se za vrijeme igre kako ga lovac lovi ----------------
     fill(255);
     textSize(26);
     if( lpos != pos ){
       textAlign(CENTER);
       text(iznos, 400, pos * 50 + 35);
+      textSize(20);
+      text("€", 400 + textWidth(str(iznos)), pos * 50 + 35);
+      
+     //---- dva trokutića sa sa strane koji označuju gdje je iznos--------------------
       triangle( 180+10*pos, pos*50+10, 180+10*pos, pos*50+40, 200+10*pos, pos*50+25 );
       triangle( 600-10*pos, pos*50+10, 600-10*pos, pos*50+40, 580-10*pos, pos*50+25 );
       textAlign(LEFT);
     }
+    
+    //-------- trokutić koji pokazuje gdje je lovac -------------------------------------
     fill(0);
     if( lpos != -1 ) triangle( 190+10*pos, lpos*50+10, 590-10*pos, lpos*50+10, 400, lpos*50+40 );
   }
+  
   void odigrajLovca(){
     int num = (int)random(100);
     if(num<70)

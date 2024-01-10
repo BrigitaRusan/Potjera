@@ -12,10 +12,10 @@ class Druga{
     textAlign(CENTER);
     
     if(iznos>0){
-    text("Čestitamo, osvojili ste\n" + iznos + " kuna!", 400, 350);
+    text("Čestitamo, osvojili ste\n" + iznos + " €!", 400, 350);
     }
     else{
-      text("Nažalost u ovoj igri ste osvojili\n" + iznos + " kuna!", 400, 350);
+      text("Nažalost u ovoj igri ste osvojili\n" + iznos + " €!", 400, 350);
     }
     
     fill(255);

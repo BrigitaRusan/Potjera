@@ -52,7 +52,10 @@ Prije pokretanja potrebno je instalirati Sound library i Minim.
 * Ako se igra protiv lovca, može se igraču dati na izbor da igra protiv jednog od 4 ponuđena lovca (kao u originalnoj verziji), a svakom od lovaca postavimo drugačiju vjerojatnost točnog odgovora (naravno, tu vjerojatnost na početku igre, igrač ne zna).
 * Vezano uz prijedlog za doradu od prošle godine da se priznaju odgovori u više padeža. To bi se moglo implementirati tako da se za jedno pitanje, točan odgovor u svim padežima(barem u onima u kojima zvuči smisleno) pamti u nekom polju tako da na jedno pitanje zapravo imamo “više točnih odgovora”. Na taj način bismo mogli riješiti i problem na kojeg sam naišla, a to je da se kao točan odgovor priza samo puno ime i prezime, a ponekad je dovoljno i samo prezime.
 
+### TODO3:
+*	Dodati zvuk odbrojavanje sata za vrijeme prve i završne igre.
+* Implementirati da u igri s lovcem igrač odabire odgovor pritiskom miša na pravokutnik a, b ili c, a ne tipkama a, b i c.
+* Za vrijeme upisa odgovora s tipkovnice da prepoznaje space na kraju riječi te da ga zanemari ako je na kraju.
 
 ### Napomena:
 * uvesti konstante za neke cesto koristene koordinate unutar koda
-* komentirati kod

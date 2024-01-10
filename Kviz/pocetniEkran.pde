@@ -108,7 +108,7 @@ class Pocetni{
     }
     // zavrsna igra
      if( zav_pot ){
-      zavrsna_potjera.iscrtaj(); 
+      Zavrsna_potjera.iscrtaj(); 
       song3.stop();
       first=true;
     }
@@ -138,27 +138,46 @@ class Pocetni{
     if( prva ) Faza1.provjeriBotun( key );
     if( izbor ) Izbor.provjeriBotun( key );
     if( treca ) Faza3.provjeriBotun( key );
-    if( zav_pot ) zavrsna_potjera.provjeriBotun( key );
-    if ( key == ' ' && pocetna){
+    if( zav_pot ) Zavrsna_potjera.provjeriBotun( key );
+    //if(zavrsni) Zavrsni.provjeriBotun(key);
+    
+    
+    //------- navigacija -------------------------
+    if ( key == ' ' && pocetna){ // pocetniEkran
       Faza1.time = millis();
       pocetna = false;
-      prva = true;
-    }
-    if( key == ' ' && druga){
-      druga = false;
-      izbor = true;
-    }
-    if ( key == ' ' && treca){
-      zavrsna_potjera.time = millis();
-      treca = false;
-      hunter = true;
-    }
-    if( key == ' ' && hunter){
-      treca = false;
-      zav_pot = true;
+      prva = true; // ide igrati prvu igru file prvaFaza
     }
     
-    if( key == ' ' && zavrsni ) Zavrsni.provjeriBotun( key );
+    //------->postavlja se druga = true unutar prvaFaza 
+    
+    if( key == ' ' && druga){ // drugaFaza
+      druga = false; 
+      izbor = true;
+    }
+    
+    //------->postavlja se treca = true unutar Biranje
+    
+    if( key == ' ' && hunter){ // lovacRezultat
+      hunter = false; 
+       
+       if( win == true){ // u završnu potjeru se može ići samo ako se pobjedilo na ploči
+         zav_pot = true;
+       }
+       else{
+         zavrsni = true;
+       }
+    }
+
+    //------->postavlja se zavrsni = true unutar zavrsna potjera
+
+    if( key == ' ' && zavrsni ){
+      zavrsni =false;
+      zav_pot = false;
+      pocetna = true;
+      Zavrsni.provjeriBotun( key );
+    }
+    
     
     if( keyCode == LEFT ){
        lovacIgrac=true;
